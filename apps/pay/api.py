@@ -121,7 +121,7 @@ class PayAPIView(viewsets.ViewSet):
             query = query.filter(ordercode=self.request.query_params_format.get("ordercode"))
 
 
-        if request.user.rolecode in ["1000","1001"]:
+        if request.user.rolecode in ["1000","1001","1006"]:
             if self.request.query_params_format.get("userid"):
                 query = query.filter(userid=self.request.query_params_format.get("userid"))
 
