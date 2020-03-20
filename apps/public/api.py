@@ -1837,16 +1837,16 @@ class PublicAPIView(viewsets.ViewSet):
                         {"path": '/passwd', "component": "passwd", "name": '密码修改'}
                     ]
                 },
-                # {
-                #     "path": '/business',
-                #     "component": "Home",
-                #     "name": '商户管理',
-                #     "iconCls": 'el-icon-s-shop',
-                #     "children": [
-                #         {"path": '/waitbn', "component": "waitbn", "name": '待审核商户'},
-                #         {"path": '/bnlist', "component": "bnlist", "name": '商户列表'}
-                #     ]
-                # },
+                {
+                    "path": '/business',
+                    "component": "Home",
+                    "name": '商户管理',
+                    "iconCls": 'el-icon-s-shop',
+                    "children": [
+                        # {"path": '/waitbn', "component": "waitbn", "name": '待审核商户'},
+                        {"path": '/bnlist', "component": "bnlist", "name": '商户列表'}
+                    ]
+                },
                 # {
                 #     "path": '/agent',
                 #     "component": "Home",
@@ -1857,20 +1857,20 @@ class PublicAPIView(viewsets.ViewSet):
                 #         {"path": '/agentlist', "component": "agentlist", "name": '代理人列表'}
                 #     ]
                 # },
-                # {
-                #     "path": '/finance',
-                #     "component": "Home",
-                #     "name": '财务数据',
-                #     "iconCls": 'el-icon-s-finance',
-                #     "children": [
-                #         {"path": '/busicount', "component": "busicount", "name": '通道数据'},
-                #         {"path": '/passcount', "component": "passcount", "name": '渠道数据'},
-                #         {"path": '/ordercount', "component": "ordercount", "name": '每日报表'},
-                #         {"path": '/ballist_admin', "component": "ballist_admin", "name": '资金明细'},
-                #         {"path": '/ubaladmin', "component": "ubaladmin", "name": '调账'},
-                #         {"path": '/accCheckok', "component": "accCheckok", "name": '对账'},
-                #     ]
-                # },
+                {
+                    "path": '/finance',
+                    "component": "Home",
+                    "name": '财务数据',
+                    "iconCls": 'el-icon-s-finance',
+                    "children": [
+                        {"path": '/busicount', "component": "busicount", "name": '通道数据'},
+                        {"path": '/passcount', "component": "passcount", "name": '渠道数据'},
+                        # {"path": '/ordercount', "component": "ordercount", "name": '每日报表'},
+                        {"path": '/ballist_admin', "component": "ballist_admin", "name": '资金明细'},
+                        {"path": '/ubaladmin', "component": "ubaladmin", "name": '调账'},
+                        # {"path": '/accCheckok', "component": "accCheckok", "name": '对账'},
+                    ]
+                },
                 {
                     "path": '/pay',
                     "component": "Home",
@@ -1892,20 +1892,20 @@ class PublicAPIView(viewsets.ViewSet):
                     "name": '订单管理',
                     "iconCls": 'el-icon-s-order',
                     "children": [
-                        {"path": '/orderlist', "component": "orderlist", "name": '订单列表'},
-                        {"path": '/cashoutlist_admin_df', "component": "cashoutlist_admin_df", "name": '代付订单列表'}
+                        {"path": '/orderlist1', "component": "orderlist1", "name": '订单列表'},
+                        # {"path": '/cashoutlist_admin_df', "component": "cashoutlist_admin_df", "name": '代付订单列表'}
                     ]
                 },
-                {
-                    "path": '/sys',
-                    "component": "Home",
-                    "name": '系统管理',
-                    "iconCls": 'el-icon-s-order',
-                    "children": [
-                        {"path": '/whitelist', "component": "whitelist", "name": '白名单管理'},
-                        {"path": '/cache', "component": "cache", "name": '缓存管理'}
-                    ]
-                },
+                # {
+                #     "path": '/sys',
+                #     "component": "Home",
+                #     "name": '系统管理',
+                #     "iconCls": 'el-icon-s-order',
+                #     "children": [
+                #         {"path": '/whitelist', "component": "whitelist", "name": '白名单管理'},
+                #         {"path": '/cache', "component": "cache", "name": '缓存管理'}
+                #     ]
+                # },
                 # {
                 #     "path": '/cqmanage',
                 #     "component": "Home",
