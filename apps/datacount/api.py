@@ -147,6 +147,36 @@ class DataCountAPIView(GenericViewSetCustom):
 
         return {"data":{"data1":data1,"data4":data4}}
 
+    @list_route(methods=['GET'])
+    @Core_connector()
+    def appHomeData(self,request):
+
+        res={
+            "rate":0.0,
+            "totorder":0,
+            "sorder":0,
+            "amount":0.0
+        }
+        print(request.query_params_format)
+        start_datetime  = send_toTimestamp(request.query_params_format.get("startdate")+' 00:00:01')
+        end_datetime = send_toTimestamp(request.query_params_format.get("enddate") + ' 23:59:59')
+
+        if self.request.user.rolecode in ["1000", "1001", "1005", "1006"]:
+            pass
+        else:
+            raise PubErrorCustom("权限不足!")
+
+        obj = Order.objects.filter(createtime__lte=end_datetime,createtime__gte=start_datetime)
+
+        if obj.exists:
+            for item in obj:
+                res['amount'] += float(item.amount)
+                res['totorder'] += 1
+                if item.status=='0':
+                    res['sorder'] += 1
+        res['rate'] = round(res['sorder'] * 100.0 / res['totorder'],2) if res['totorder'] else 0.0
+        return {"data":res}
+
 
     @list_route(methods=['GET'])
     @Core_connector()

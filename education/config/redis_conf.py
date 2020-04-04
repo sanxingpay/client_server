@@ -2,7 +2,7 @@
 import os
 
 REDISHOST = os.environ.get('REDISHOST', 'localhost')
-REDISPASS = os.environ.get('REDISPASS', 'plokiqikj##mlad,..ad')
+REDISPASS = os.environ.get('REDISPASS', '123456')
 REDISPORT = os.environ.get('REDISPORT', '6379')
 
 CACHES = {

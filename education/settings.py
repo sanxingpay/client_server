@@ -75,7 +75,9 @@ INSTALLED_APPS += INSTALLED_APPS_CUSTOM
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'corsheaders.middleware.CorsMiddleware',  # 按顺序
     'django.middleware.common.CommonMiddleware',
+    'django.middleware.common.CommonMiddleware',  # 按顺序
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
@@ -246,3 +248,39 @@ LOGGING = {
     }
 }
 
+ALLOWED_HOSTS = ['*']
+
+APPEND_SLASH = False
+
+CORS_EXPOSE_HEADERS = ['Total','Authorization']
+
+CORS_ALLOW_CREDENTIALS = True
+CORS_ORIGIN_ALLOW_ALL = True
+CORS_ORIGIN_WHITELIST = ()
+
+CORS_ALLOW_METHODS = (
+    'DELETE',
+    'GET',
+    'OPTIONS',
+    'PATCH',
+    'POST',
+    'PUT',
+    'VIEW',
+)
+
+CORS_ALLOW_HEADERS = (
+    'accept',
+    'accept-encoding',
+    'authorization',
+    'content-type',
+    'dnt',
+    'origin',
+    'token',
+    'encryption',
+    'x-total',
+    "ticket",
+    'total',
+    'user-agent',
+    'x-csrftoken',
+    'x-requested-with',
+)
