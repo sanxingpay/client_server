@@ -155,7 +155,8 @@ class DataCountAPIView(GenericViewSetCustom):
             "rate":0.0,
             "totorder":0,
             "sorder":0,
-            "amount":0.0
+            "amount":0.0,
+            "totamount":0.0
         }
         print(request.query_params_format)
         start_datetime  = send_toTimestamp(request.query_params_format.get("startdate")+' 00:00:01')
@@ -170,9 +171,10 @@ class DataCountAPIView(GenericViewSetCustom):
 
         if obj.exists:
             for item in obj:
-                res['amount'] += float(item.amount)
+                res['totamount'] += float(item.amount)
                 res['totorder'] += 1
                 if item.status=='0':
+                    res['amount'] += float(item.amount)
                     res['sorder'] += 1
         res['rate'] = round(res['sorder'] * 100.0 / res['totorder'],2) if res['totorder'] else 0.0
         return {"data":res}
