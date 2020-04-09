@@ -192,6 +192,47 @@ class OrderAPIView(GenericViewSetCustom):
     @Core_connector(transaction=True)
     def order_status_upd1(self, request, *args, **kwargs):
 
+        """
+        手工回调不同金额
+        :param request:
+        :param args:
+        :param kwargs:
+        :return:
+        """
+
+        if self.request.data_format.get("orders") and len(self.request.data_format.get("orders"))>1:
+            raise PubErrorCustom("手工上分只允许单笔操作!")
+
+        if not self.request.data_format.get("orders") :
+            raise PubErrorCustom("请选择订单！")
+
+        if not self.request.data_format.get("amount",None):
+            raise PubErrorCustom("回调金额不能为空!")
+
+        request_data = {
+            "orderid": self.request.data_format.get("orders")[0],
+            "amount":self.request.data_format.get("amount",0.0)
+        }
+
+        result = requestEx('POST',
+                         url=url_join('/callback_api/lastpass/shougonghandler1_callback'),
+                         data=request_data,
+                         json=request_data, verify=False)
+
+        res = json.loads(result.content.decode('utf-8'))
+
+        print(res)
+
+        if str(res['rescode']) != '10000':
+            raise PubErrorCustom(res['msg'])
+
+        return None
+
+
+    @list_route(methods=['POST'])
+    @Core_connector(transaction=True)
+    def order_status_upd1(self, request, *args, **kwargs):
+
         if not len(self.request.data_format.get("orders")):
             raise PubErrorCustom("订单号不能为空!")
 

@@ -678,7 +678,7 @@ class PublicAPIView(viewsets.ViewSet):
     def business_query(self,request, *args, **kwargs):
         query_format=str()
         query_params=list()
-
+        print(self.request.query_params_format)
         if self.request.query_params_format.get("userid"):
             query_format = query_format + " and ("
             count = 0
@@ -909,6 +909,7 @@ class PublicAPIView(viewsets.ViewSet):
     @Core_connector(transaction=True)
     def correct(self,request, *args, **kwargs):
 
+        print(request.data_format)
         try:
             user = Users.objects.select_for_update().get(userid=request.data_format.get('userid'))
         except Users.DoesNotExist:
