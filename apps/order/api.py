@@ -190,7 +190,7 @@ class OrderAPIView(GenericViewSetCustom):
 
     @list_route(methods=['POST'])
     @Core_connector(transaction=True)
-    def order_status_upd1(self, request, *args, **kwargs):
+    def order_status_upd2(self, request, *args, **kwargs):
 
         """
         手工回调不同金额
