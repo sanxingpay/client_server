@@ -157,7 +157,7 @@ class PayCallBase(object) :
                 "businessid" : str(user.userid),
                 "ordercode" : str(self.order_obj.ordercode),
                 "down_ordercode" : str(self.order_obj.down_ordercode),
-                "amount" : str(self.order_obj.amount),
+                "amount" : str(self.amount),
                 "pay_time" : str(UtilTime().timestamp),
                 "status" : "00"
             }

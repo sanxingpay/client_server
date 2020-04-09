@@ -59,7 +59,7 @@ class PayAPIView(viewsets.ViewSet):
                 error += "{},".format(ordercode)
                 continue
 
-            paycall = PayCallBase(amount=order.amount)
+            paycall = PayCallBase(amount=order.confirm_amount)
             paycall.order_obj = order
             paycall.callback_request_to_server()
             paycall.order_obj.save()
