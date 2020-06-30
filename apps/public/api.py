@@ -448,11 +448,14 @@ class PublicAPIView(viewsets.ViewSet):
                     user = Users.objects.get(userid=item.userid)
                 except Users.DoesNotExist:
                     continue
-
+                try:
+                    windows = item.user_agent.split('(')[1].split(';')[0]
+                except Exception as e:
+                    windows = ""
                 data.append({
                     "ip": item.ip,
                     "chrom": item.user_agent.split(' ')[0],
-                    "windows": item.user_agent.split('(')[1].split(';')[0],
+                    "windows": windows,
                     "userid": item.userid,
                     "loginname": user.loginname,
                     "name": user.name,
