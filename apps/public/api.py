@@ -439,47 +439,47 @@ class PublicAPIView(viewsets.ViewSet):
 
     @list_route(methods=['GET'])
     @Core_connector(pagination=True)
-    def loginquery(self,request, *args, **kwargs):
-        login=Login.objects.filter().order_by('-createtime')
-        data=[]
+    def loginquery(self, request, *args, **kwargs):
+        login = Login.objects.filter().order_by('-createtime')
+        data = []
         if login.exists():
             for item in login:
                 try:
-                    user=Users.objects.get(userid=item.userid)
+                    user = Users.objects.get(userid=item.userid)
                 except Users.DoesNotExist:
                     continue
 
                 data.append({
-                    "ip" : item.ip,
-                    "chrom" : item.user_agent.split(' ')[0],
-                    "windows" : item.user_agent.split('(')[1].split(';')[0],
-                    "userid" : item.userid,
-                    "loginname" : user.loginname,
-                    "name" : user.name,
-                    "createtime" : timestamp_toTime(item.createtime),
-                    "rolename" : Role.objects.get(rolecode=user.rolecode).name
+                    "ip": item.ip,
+                    "chrom": item.user_agent.split(' ')[0],
+                    "windows": item.user_agent.split('(')[1].split(';')[0],
+                    "userid": item.userid,
+                    "loginname": user.loginname,
+                    "name": user.name,
+                    "createtime": timestamp_toTime(item.createtime),
+                    "rolename": Role.objects.get(rolecode=user.rolecode).name
                 })
 
-        return { "data" : data}
+        return {"data": data}
 
     @list_route(methods=['GET'])
     @Core_connector(pagination=True)
-    def manageadd_query(self,request, *args, **kwargs):
+    def manageadd_query(self, request, *args, **kwargs):
         user = Users.objects.raw("""
             SELECT t1.*,t2.name as rolename FROM user as t1
               INNER JOIN `role` t2 on t1.rolecode = t2.rolecode
-              WHERE t2.type = 0 and t1.status=0 and t1.rolecode!='1000' 
+              WHERE t2.type = 0 and t1.status=0
         """)
 
-        return  {"data":  ManageSerializer(user,many=True).data}
+        return {"data": ManageSerializer(user, many=True).data}
 
     @list_route(methods=['POST'])
     @Core_connector(transaction=True)
-    def manageadd_del(self,request, *args, **kwargs):
+    def manageadd_del(self, request, *args, **kwargs):
         userid = request.data_format.get('userid')
 
         try:
-            user=Users.objects.get(userid=userid)
+            user = Users.objects.get(userid=userid)
             user.status = 1
             user.save()
         except Users.DoesNotExist:
@@ -487,9 +487,16 @@ class PublicAPIView(viewsets.ViewSet):
 
         return None
 
+    # 查询用户
+    @list_route(methods=['GET'])
+    @Core_connector()
+    def getpaypassids(self, request, *args, **kwargs):
+
+        return {"data": PayPassModelSerializer(PayPass.objects.filter(status='0'), many=True).data}
+
     @list_route(methods=['POST'])
     @Core_connector(transaction=True, serializer_class=UsersSerializer1, model_class=Users)
-    def manageadd_add(self,request, *args, **kwargs):
+    def manageadd_add(self, request, *args, **kwargs):
 
         serializer = kwargs.pop('serializer')
         isinstance = serializer.save()
@@ -506,9 +513,10 @@ class PublicAPIView(viewsets.ViewSet):
 
     @list_route(methods=['POST'])
     @Core_connector(transaction=True)
-    def manageadd_upd(self,request, *args, **kwargs):
+    def manageadd_upd(self, request, *args, **kwargs):
 
-        serializer=UsersSerializer1(Users.objects.get(userid=request.data_format.get("userid")),data=request.data_format)
+        serializer = UsersSerializer1(Users.objects.get(userid=request.data_format.get("userid")),
+                                      data=request.data_format)
         serializer.is_valid(raise_exception=True)
         serializer.save()
 
@@ -1897,16 +1905,16 @@ class PublicAPIView(viewsets.ViewSet):
                         # {"path": '/cashoutlist_admin_df', "component": "cashoutlist_admin_df", "name": '代付订单列表'}
                     ]
                 },
-                # {
-                #     "path": '/sys',
-                #     "component": "Home",
-                #     "name": '系统管理',
-                #     "iconCls": 'el-icon-s-order',
-                #     "children": [
-                #         {"path": '/whitelist', "component": "whitelist", "name": '白名单管理'},
-                #         {"path": '/cache', "component": "cache", "name": '缓存管理'}
-                #     ]
-                # },
+                {
+                    "path": '/sys',
+                    "component": "Home",
+                    "name": '系统管理',
+                    "iconCls": 'el-icon-s-order',
+                    "children": [
+                        {"path": '/whitelist', "component": "whitelist", "name": '白名单管理'},
+                        {"path": '/cache', "component": "cache", "name": '缓存管理'}
+                    ]
+                },
                 # {
                 #     "path": '/cqmanage',
                 #     "component": "Home",
